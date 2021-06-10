@@ -21,22 +21,22 @@
 
         window.onload = function() {
             board = new Board(6, 10, "tetris", {
-                68: "right",
-                65: "left",
-                83: "down",
-                87: "up",
-                74: "rotate",
-                76: "etator"
+                68: "right", // d
+                65: "left", // a
+                83: "down", // s
+                87: "up", // w
+                86: "rotate", // v
+                67: "etator", // c
             });
             board.print();
 
             board2 = new Board(6, 10, "tetris2", {
-                34: "right",
-                46: "left",
-                35: "down",
-                36: "up",
-                100: "rotate",
-                102: "etator"
+                75: "right", // k
+                72: "left", // h
+                74: "down", // j
+                85: "up", // i
+                190: "rotate", // .
+                188: "etator", // ,
             });
             board2.print();
         }

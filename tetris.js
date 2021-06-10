@@ -79,7 +79,7 @@ var Board = (function () {
 
         pbtn = div.appendNewChild("button");
         pbtn.className = "pause";
-        pbtn.textContent = "pause";
+        pbtn.textContent = "run";
         pbtn.onclick = this.toggleRun.bind(this);
 
         this.handle = null;
@@ -97,17 +97,38 @@ var Board = (function () {
     // the first point is the anchor for rotation
     Board.prototype.blocks = {
         "O": [
-            new Vector(0, 0),
+            new Vector( 0, 0),
             new Vector(-1, 0),
             new Vector(-1, 1),
-            new Vector(0, 1)
+            new Vector( 0, 1)
         ],
 
         "I": [
-            new Vector(0, 0),
+            new Vector( 0, 0),
             new Vector(-2, 0),
             new Vector(-1, 0),
-            new Vector(1, 0)
+            new Vector( 1, 0)
+        ],
+
+        "L": [
+            new Vector(0, 0),
+            new Vector(0, 1),
+            new Vector(1, 0),
+            new Vector(2, 0)
+        ],
+
+        "5": [
+            new Vector( 0, 0),
+            new Vector(-1, 0),
+            new Vector( 0, 1),
+            new Vector( 1, 1)
+        ],
+
+        "S": [
+            new Vector( 0, 0),
+            new Vector( 1, 0),
+            new Vector( 0, 1),
+            new Vector(-1, 1)
         ],
 
         random: undefined
@@ -203,7 +224,7 @@ var Board = (function () {
         }
 
         if (this.keyListener !== null) {
-            this.getElem().removeEventListener('keydown', this.keyListener, false);
+            document.removeEventListener('keydown', this.keyListener, false);
         }
 
         this.keyListener = (function (event) {
@@ -217,9 +238,9 @@ var Board = (function () {
                 case "down":
                     mv(0, -1);
                     break;
-                case "up":
-                    mv(0, 1);
-                    break;
+                //case "up": // for debug purpose only
+                //    mv(0, 1);
+                //    break;
                 case "rotate":
                     rt(1);
                     break;
@@ -229,7 +250,7 @@ var Board = (function () {
             }
         }).bind(this);
 
-        this.getElem().addEventListener('keydown', this.keyListener, false);
+        document.addEventListener('keydown', this.keyListener, false);
     };
 
     // spawn random nowBlock at top of the field.
@@ -348,12 +369,14 @@ var Board = (function () {
 
     Board.prototype.toggleRun = function () {
         if (this.handle === null) {
-            this.handle = window.setInterval(this.step.bind(this), 1500);
+            this.getElem(".pause").textContent = "pause";
             this.getElem(".well").style.color = "black";
+            this.handle = window.setInterval(this.step.bind(this), 1000);
         } else {
             window.clearInterval(this.handle);
             this.handle = null;
             this.getElem(".well").style.color = "darkgrey";
+            this.getElem(".pause").textContent = "run";
         }
     };
 
